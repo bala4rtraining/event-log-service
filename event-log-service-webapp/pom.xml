@@ -66,7 +66,7 @@
         <dependency>
             <groupId>org.bahmni.module</groupId>
             <artifactId>web-clients</artifactId>
-            <version>0.93-SNAPSHOT</version>
+            <version>0.94-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
