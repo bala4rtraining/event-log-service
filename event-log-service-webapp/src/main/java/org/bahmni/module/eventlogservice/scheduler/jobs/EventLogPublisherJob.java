@@ -1,6 +1,7 @@
 package org.bahmni.module.eventlogservice.scheduler.jobs;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bahmni.module.eventlogservice.fetcher.EventLogFetcher;
 import org.bahmni.module.eventlogservice.model.EventLog;
 import org.bahmni.module.eventlogservice.repository.EventLogRepository;
@@ -21,7 +22,7 @@ public class EventLogPublisherJob implements Job {
     private EventLogRepository eventLogRepository;
     private EventLogFetcher eventLogFetcher;
 
-    private static Logger logger = Logger.getLogger(EventLogPublisherJob.class);
+    private static Logger logger = LogManager.getLogger(EventLogPublisherJob.class);
 
     @Autowired
     public EventLogPublisherJob(EventLogRepository eventLogRepository, EventLogFetcher eventLogFetcher) {
