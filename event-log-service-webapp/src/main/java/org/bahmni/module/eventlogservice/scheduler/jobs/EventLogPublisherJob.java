@@ -35,14 +35,14 @@ public class EventLogPublisherJob implements Job {
         EventLog eventLog = eventLogRepository.findFirstByOrderByIdDesc();
         List<EventLog> eventLogs = new ArrayList<EventLog>();
         String lastReadEventUuid = eventLog != null ? eventLog.getParentUuid(): "";
-        logger.debug("Reading events which happened after event with uuid: " + lastReadEventUuid);
+        logger.debug("Reading events which happened after event with uuid: {}", lastReadEventUuid);
         try {
             eventLogs.addAll(eventLogFetcher.fetchEventLogsAfter(lastReadEventUuid));
         } catch (IOException e) {
             logger.error(e);
             throw new RuntimeException(e);
         }
-        logger.debug("Found " + eventLogs.size() + " events.");
+        logger.debug("Found {} events" ,eventLogs.size());
         Map<String,EventLog> eventRecordUuidsWithNewFilter = new HashMap<String, EventLog>();
             for(EventLog event : eventLogs){
             if(event.getCategory().equals("patient")){
@@ -65,7 +65,7 @@ public class EventLogPublisherJob implements Job {
             throw new RuntimeException(e);
         }
         eventLogRepository.save(eventLogs);
-        logger.debug("Copied " + eventLogs.size() + " events to events_log table");
+        logger.debug("Copied {} events to events_log table", eventLogs.size());
     }
 
     private boolean requiredNewFilter(EventLog event, EventLog recentPatientEvent) {

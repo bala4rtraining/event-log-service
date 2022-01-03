@@ -56,7 +56,7 @@ public class ScheduledTasks implements SchedulingConfigurer {
                 taskRegistrar.setScheduler(taskExecutor());
                 taskRegistrar.addTriggerTask(getTask(quartzCronScheduler), getTrigger(quartzCronScheduler));
             } catch (ParseException e) {
-                logger.error("Could not parse the cron statement: " + quartzCronScheduler.getCronStatement() + " for: " + quartzCronScheduler.getName());
+                logger.error("Could not parse the cron statement: {} for: {}" ,quartzCronScheduler.getCronStatement(), quartzCronScheduler.getName());
                 e.printStackTrace();
             }
         }
@@ -77,11 +77,11 @@ public class ScheduledTasks implements SchedulingConfigurer {
             public void run() {
                 Job job = jobs.get(quartzCronScheduler.getName());
                 try {
-                    logger.debug("Copying events from event_records to events_log table at: " + new Date());
+                    logger.debug("Copying events from event_records to events_log table at: {}", new Date());
                     job.process();
                     logger.debug("Done.");
                 } catch (InterruptedException e) {
-                    logger.warn("Thread interrupted for the job: " + quartzCronScheduler.getName());
+                    logger.warn("Thread interrupted for the job: {}", quartzCronScheduler.getName());
                 }
             }
         };
