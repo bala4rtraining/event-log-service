@@ -1,6 +1,7 @@
 package org.bahmni.module.eventlogservice.scheduler;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.bahmni.module.eventlogservice.model.QuartzCronScheduler;
 import org.bahmni.module.eventlogservice.repository.CronJobRepository;
 import org.bahmni.module.eventlogservice.scheduler.jobs.Job;
@@ -36,7 +37,7 @@ public class ScheduledTasks implements SchedulingConfigurer {
 
     private Map<String, Job> jobs = new HashMap<String, Job>();
 
-    private static Logger logger = Logger.getLogger(ScheduledTasks.class);
+    private static Logger logger = LogManager.getLogger(ScheduledTasks.class);
 
     @Bean(destroyMethod = "shutdown")
     public Executor taskExecutor() {
@@ -55,7 +56,7 @@ public class ScheduledTasks implements SchedulingConfigurer {
                 taskRegistrar.setScheduler(taskExecutor());
                 taskRegistrar.addTriggerTask(getTask(quartzCronScheduler), getTrigger(quartzCronScheduler));
             } catch (ParseException e) {
-                logger.error("Could not parse the cron statement: " + quartzCronScheduler.getCronStatement() + " for: " + quartzCronScheduler.getName());
+                logger.error("Could not parse the cron statement: {}", quartzCronScheduler.getCronStatement() + " for: " + quartzCronScheduler.getName());
                 e.printStackTrace();
             }
         }
@@ -76,11 +77,11 @@ public class ScheduledTasks implements SchedulingConfigurer {
             public void run() {
                 Job job = jobs.get(quartzCronScheduler.getName());
                 try {
-                    logger.debug("Copying events from event_records to events_log table at: " + new Date());
+                    logger.debug("Copying events from event_records to events_log table at: {}", new Date());
                     job.process();
                     logger.debug("Done.");
                 } catch (InterruptedException e) {
-                    logger.warn("Thread interrupted for the job: " + quartzCronScheduler.getName());
+                    logger.warn("Thread interrupted for the job: {}", quartzCronScheduler.getName());
                 }
             }
         };
