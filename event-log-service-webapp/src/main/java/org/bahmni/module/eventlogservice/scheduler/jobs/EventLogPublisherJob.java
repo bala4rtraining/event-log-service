@@ -37,7 +37,7 @@ public class EventLogPublisherJob implements Job {
         try {
             eventLogs.addAll(eventLogFetcher.fetchEventLogsAfter(lastReadEventUuid));
         } catch (IOException e) {
-            logger.error(e);
+            logger.error(String.valueOf(e));
             throw new RuntimeException(e);
         }
         logger.debug("Found {} events", eventLogs.size());
@@ -59,7 +59,7 @@ public class EventLogPublisherJob implements Job {
                 }
             }
         } catch (IOException e) {
-            logger.error(e);
+            logger.error(String.valueOf(e));
             throw new RuntimeException(e);
         }
         eventLogRepository.save(eventLogs);
