@@ -14,7 +14,7 @@
 
     <properties>
         <log4j.version>2.17.1</log4j.version>
-        <webClients.version>0.94.2-SNAPSHOT</webClients.version>
+        <webClients.version>0.94.2</webClients.version>
     </properties>
 
     <dependencies>
