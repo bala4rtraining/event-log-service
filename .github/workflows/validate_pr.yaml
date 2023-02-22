@@ -18,4 +18,4 @@ jobs:
       - name: Checkout Event-Log-Service Repo
         uses: actions/checkout@v2
       - name: Build with Maven
-      - run: mvn clean install -U -DskipTests
+        run: mvn clean install -U -DskipTests
