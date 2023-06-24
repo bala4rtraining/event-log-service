@@ -12,7 +12,7 @@ jobs:
     name: Build & Publish Docker Image
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Commit and Push Changes
         #uses: actions/checkout@v2
         uses: actions-js/push@v2
 
